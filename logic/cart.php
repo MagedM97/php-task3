@@ -26,30 +26,6 @@ function addProductToCart($product)
 }
 
 
-function decrease($product)
-{
-    if (session_status() === PHP_SESSION_NONE)
-        session_start();
-
-    $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-    $found = false;
-    for ($i = 0; $i < count($cart); $i++) {
-        if ($cart[$i]['product']['id'] === $product['id']) {
-            var_dump($product[0]);
-            die();
-            if($product[0]=='plus')
-            $cart[$i]['quantity'] += 1;
-            else if ($product[0]=='minus')
-            $cart[$i]['quantity'] -= 1;
-            $found = true;
-        }
-    }
-    if (!$found) {
-        array_push($cart, ['product' => $product, 'quantity' => 1]);
-    }
-    $_SESSION['cart'] = $cart;
-}
-
 function getCart()
 {
     if (!headers_sent()&& session_status() === PHP_SESSION_NONE)
@@ -73,7 +49,7 @@ function sub_total()
     $sum = 0;
     $cart = getCart();
     foreach ($cart as $line) {
-        $sum += $line['product']['price']*$line['quantity'];
+        $sum += ($line['product']['price']-($line['product']['price']*$line['product']['discount']))*$line['quantity'];
         
     }
     return $sum;
@@ -95,4 +71,7 @@ function increase($line)
         }
 
     }
+}
+function line_total($line){
+    return ($line['product']['price'] - $line['product']['price'] * $line['product']['discount']) * $line['quantity'];
 }

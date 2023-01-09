@@ -34,12 +34,12 @@ require_once('./layouts/header.php');
               </tr>
               <?php foreach ($cart as $line) {
               ?>
-              <tr class="thead-dark"><td><img src="<?= $line['product']['image_url']?>" width="40"><?=$line['product']['name']?></td><td><?=$line['product']['price']?></td><td><div class="numOfProducts"><a href="addproduct.php?id= <?= $line['product']['id'] ?>&process=minus"><i class="fa fa-minus dark"></i></a>
+              <tr class="thead-dark"><td><img src="<?= $line['product']['image_url']?>" width="40"><?=$line['product']['name']?></td><td><?=$line['product']['price']-$line['product']['price']*$line['product']['discount']?></td><td><div class="numOfProducts"><a href="addproduct.php?id= <?= $line['product']['id'] ?>&process=minus"><i class="fa fa-minus dark"></i></a>
 
 </button><?='  '.$line['quantity'].'  '?>
 <a href="addproduct.php?id= <?= $line['product']['id'] ?>&process=plus"><i class="fa fa-plus"></i></a>
 </div>
-</td><td><?= $line['product']['price'] * $line['quantity'] ?></td><td><a href="addproduct.php?id= <?= $line['product']['id'] ?>&process=remove">Remove</a></td></tr>`<?php }?>
+</td><td><?= line_total($line); ?></td><td><a href="addproduct.php?id= <?= $line['product']['id'] ?>&process=remove">Remove</a></td></tr>`<?php }?>
             </thead>
             <tbody class="align-middle" id="products">
             </tbody>
