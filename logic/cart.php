@@ -58,20 +58,7 @@ function total()
 {
     return sub_total() + get_shipping();
 }
-function increase($line)
-{
-    if (session_status() === PHP_SESSION_NONE)
-        session_start();
-    $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-    $found = false;
-    for ($i = 0; $i < count($cart); $i++) {
-        if ($cart[$i]['product']['id'] === $line['product']['id']) {
-            $cart[$i]['quantity'] += 1;
-            
-        }
 
-    }
-}
 function line_total($line){
     return ($line['product']['price'] - $line['product']['price'] * $line['product']['discount']) * $line['quantity'];
 }
